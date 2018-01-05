@@ -29,8 +29,6 @@ services:
       - ${GL_LOGS}:/var/log/gitlab:rw
       - ${GL_DATA}:/var/opt/gitlab:rw
     ports:
-      # both ports must match the port from external_url below
-      - "${EXTERNAL_HTTP_PORT}:${EXTERNAL_HTTP_PORT}"
       # the mapped port must match ssh_port specified below.
       - "30022:${EXTERNAL_SSH_PORT}"
     environment:
