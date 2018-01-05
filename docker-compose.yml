@@ -47,6 +47,18 @@ services:
         external_url '${EXTERNAL_URL}'
         registry_external_url '${EXTERNAL_REGISTRY_URL}'
         gitlab_rails['gitlab_shell_ssh_port'] = ${EXTERNAL_SSH_PORT}
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+          }
+        registry_nginx['listen_port'] = 80
+        registry_nginx['listen_https'] = false
+        registry_nginx['proxy_set_headers'] = {
+          "X-Forwarded-Proto" => "https",
+          "X-Forwarded-Ssl" => "on"
+          }
       VIRTUAL_HOST: ${DOMAINS}
       LETSENCRYPT_HOST: ${DOMAINS}
       LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
