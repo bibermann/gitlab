@@ -47,6 +47,7 @@ services:
         gitlab_rails['redis_host'] = 'redis'
         gitlab_rails['redis_port'] = '6379'
         external_url '${EXTERNAL_URL}'
+        registry_external_url '${EXTERNAL_REGISTRY_URL}'
         gitlab_rails['gitlab_shell_ssh_port'] = ${EXTERNAL_SSH_PORT}
       VIRTUAL_HOST: ${DOMAINS}
       LETSENCRYPT_HOST: ${DOMAINS}
