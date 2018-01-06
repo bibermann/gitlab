@@ -15,7 +15,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
       - POSTGRES_DB=${POSTGRESQL_DATABASE}
     volumes:
-      - ${DB_PATH}:/var/lib/postgresql:rw
+      - ${DB_PATH}:/var/lib/postgresql/data:rw
 
   gitlab-runner:
     container_name: ${CONTAINER_GITLAB_RUNNER_NAME}
