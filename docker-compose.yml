@@ -3,12 +3,12 @@ version: '3'
 services:
   redis:
     container_name: ${CONTAINER_REDIS_NAME}
-    image: redis:3.2.11-alpine
+    image: redis:alpine
     restart: unless-stopped
 
   postgresql:
     container_name: ${CONTAINER_DB_NAME}
-    image: postgres:10.1-alpine
+    image: postgres:13-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${POSTGRESQL_USER}
@@ -31,7 +31,7 @@ services:
       - redis
       - gitlab-runner
     container_name: ${CONTAINER_GITLAB_NAME}
-    image: 'gitlab/gitlab-ce:10.3.3-ce.0'
+    image: 'gitlab/gitlab-ce:13.3.7-ce.0'
     restart: unless-stopped
     volumes:
       - ${GL_CONFIG}:/etc/gitlab:rw
