@@ -68,9 +68,20 @@ services:
           "X-Forwarded-Proto" => "https",
           "X-Forwarded-Ssl" => "on"
           }
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "mail.example.com"
+        gitlab_rails['smtp_port'] = 587
+        gitlab_rails['smtp_user_name'] = "git@example.com"
+        gitlab_rails['smtp_password'] = "<password>"
+        gitlab_rails['smtp_domain'] = "mail.example.com"
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
+        gitlab_rails['gitlab_email_from'] = 'git@example.com'
+        gitlab_rails['gitlab_email_reply_to'] = 'noreply@example.com'
       VIRTUAL_HOST: ${DOMAINS}
       LETSENCRYPT_HOST: ${DOMAINS}
-      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL} 
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
 
 networks:
   default:
