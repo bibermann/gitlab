@@ -36,17 +36,31 @@ cp .env.sample .env
     sed -i -E "s/^(LOCAL_GITLAB_DATA_DIR)=.*/\1=$DATA_DIR/" .env
 
     sudo mkdir -p $POSTRES_DIR $RUNNER_CONF_DIR $CONF_DIR $LOGS_DIR $DATA_DIR
-
-    sudo tee $RUNNER_CONF_DIR/config.toml >/dev/null <<EOF
-    concurrent = 1
-    check_interval = 0
-    EOF
     ```
 - Other configuration:
     - Please edit the `.env` file.
     - For more configuration options, see the `docker-compose.yml` file.
         - For configuring the variable `GITLAB_OMNIBUS_CONFIG`, see
             [GitLab » Docs » Configuring Omnibus GitLab](https://docs.gitlab.com/omnibus/settings/).
+
+## First start
+
+Note: To use `xsel` on a remote machine, you need to `ssh -X`.
+
+```bash
+sudo docker compose up -d
+
+sudo docker compose logs -f
+
+# Manually: Wait until the output seems regular. Ignore the gitlab-runner errors.
+
+# Copy root password
+sudo cat $CONF_DIR/initial_root_password | sed -En 's/Password: (.*)/\1/p' | tr -d '\n' | xsel -b
+
+# TODO: https://$DOMAIN/admin/runners
+
+sudo docker compose run gitlab-runner register
+```
 
 ## Run
 
@@ -59,6 +73,20 @@ sudo docker compose up -d
 ```bash
 sudo docker compose down
 ```
+
+## Maintenance
+
+Running rake tasks: Example:
+
+```bash
+sudo docker compose exec --user git gitlab gitlab-rake gitlab:env:info
+```
+
+### Upgrading
+
+See:
+- https://docs.gitlab.com/ee/update/index.html#upgrade-paths
+- https://docs.gitlab.com/ee/update/index.html#version-specific-upgrading-instructions
 
 ## References
 
